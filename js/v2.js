@@ -1,11 +1,11 @@
 
-var hero_url          = "http://localhost:8080/older_builder/simulations/get_hero_base_stats/"
-var item_url          = "http://localhost:8080/older_builder/simulations/get_item_base_stats/"
-var potion_url        = "http://localhost:8080/older_builder/simulations/get_item_base_stats/"
-var emblem_url        = "http://localhost:8080/older_builder/simulations/get_emblem_stats/"
-var talent_tier_1_url = "http://localhost:8080/older_builder/simulations/get_talent_info/"
-var talent_tier_2_url = "http://localhost:8080/older_builder/simulations/get_talent_info/"
-var skill_url         = "http://localhost:8080/older_builder/simulations/get_skill_info/"
+var hero_url          = "http://localhost:8080/build.mlbb/simulations/get_hero_base_stats/"
+var item_url          = "http://localhost:8080/build.mlbb/simulations/get_item_base_stats/"
+var potion_url        = "http://localhost:8080/build.mlbb/simulations/get_item_base_stats/"
+var emblem_url        = "http://localhost:8080/build.mlbb/simulations/get_emblem_stats/"
+var talent_tier_1_url = "http://localhost:8080/build.mlbb/simulations/get_talent_info/"
+var talent_tier_2_url = "http://localhost:8080/build.mlbb/simulations/get_talent_info/"
+var skill_url         = "http://localhost:8080/build.mlbb/simulations/get_skill_info/"
 
 var passive_dmg_ratio_mgc = [0,0,0,0]
 var passive_dmg_ratio_phy = [0,0,0,0]
@@ -1266,6 +1266,419 @@ function champion(data) {
 
 				break;
 
+				case "67": //CLAUDE
+					
+					var base_attack = f(f(this.getTotal_physical_attack()) * f(0.35)).toFixed(2)
+
+					passiveBuider.push(
+						`<center>DEXTER DEALS <span class="dmg_info">${base_attack}</span> BASIC ATTACK</center>`
+					)
+
+					renderInfo('skill_info_1',passiveBuider.join(""))
+
+				break;
+
+				
+				case "66": //BELERICK
+					
+					extra_hp = (f(this.item_hp) * f(0.15))
+					max_hp = f(f(this.getTotal_hp()) * f(0.02))
+					final_dmg = f(f(max_hp) + f(50))
+
+					passiveBuider.push(
+						`<center>GAIN EXTRA <span class="dmg_info">${extra_hp}</span> HP FROM EQUIPMENT </center>`,
+						`<br>`,
+						`<center>FLOWER OF LIFE DEALS <span class="dmg_info">${final_dmg}</span> MAGIC DAMAGE</center>`
+					)
+
+					renderInfo('skill_info_1',passiveBuider.join(""))
+
+				break;
+
+				case "62": //KAJA
+					
+				    var base_dmg = f(150) + f(f(this.getTotal_magic_power()) * f(0.7)).toFixed(2)
+					var hp_dmg = (f(global_enemy_hp) * f(0.05))
+
+					var final_dmg = (f(base_dmg) + f(hp_dmg))
+
+					passiveBuider.push(
+						`<center>DEALS <span class="dmg_info">${final_dmg}</span> MAGIC DAMAGE</center>`
+					)
+
+					renderInfo('skill_info_1',passiveBuider.join(""))
+
+				break;
+
+				case "61": //ZILONG
+
+				    var base_attack = f(f(this.getTotal_physical_attack()) * f(1.8)).toFixed(2)
+
+					passiveBuider.push(
+						`<center>DEALS <span class="dmg_info">${base_attack}</span> BASIC ATTACK DAMAGE</center>`
+					)
+
+					renderInfo('skill_info_1',passiveBuider.join(""))
+
+				break;
+
+				case "60": //ZHASK
+
+					var damage = f(f(500) + f(this.getTotal_magic_power())).toFixed(2)
+
+					passiveBuider.push(
+						`<center>DEALS <span class="dmg_info">${damage}</span> TRUE DAMAGE</center>`
+					)
+
+					renderInfo('skill_info_1',passiveBuider.join(""))
+
+				break;
+
+				
+				case "54": //SUN
+
+					var reduce = f(f(global_enemy_armor) * f(0.6)).toFixed(2)
+					var final_def = f(f(global_enemy_armor) - f(reduce)).toFixed(2)
+
+					passiveBuider.push(
+						`<center>REDUCE ENEMY ARMOR TO <span class="dmg_info">${final_def}</span> AT MAX STACK</center>`
+					)
+
+					renderInfo('skill_info_1',passiveBuider.join(""))
+
+				break;
+
+				case "53": //SABER
+
+					passiveBuider.push(
+						`<center>REDUCE ENEMY ARMOR BY <span class="dmg_info">35</span> AT MAX STACK</center>`
+					)
+
+					renderInfo('skill_info_1',passiveBuider.join(""))
+
+				break;
+				
+
+				case "52": //RUBY
+
+					var level = 0
+					var lifesteal = f(this.getTotal_lifesteal()).toFixed(2)
+					if(this.level ==  null) {
+						level = 1
+					} else {
+
+						level = f(this.level)
+					}
+					
+					var def = (f(16) + f((1.6) * f(level)))
+					var final_def = f(f(def) * f(3)).toFixed(2)
+
+					passiveBuider.push(
+						`<center>INCREASE LIFESTEAL TO <span class="dmg_info">${lifesteal}</span></center>`,
+						`<br>`,
+						`<center>ADDED <span class="dmg_info">${final_def}</span> PHYSICAL/MAGIC DEF AT MAX STACKS</center>`
+					)
+
+					renderInfo('skill_info_1',passiveBuider.join(""))
+
+				break;
+
+				case "50": //RAFAELA
+					
+					var dmg = f(f(global_enemy_hp) * f(0.20))
+
+					passiveBuider.push(
+						`<center>DEAL <span class="dmg_info">${dmg}</span> TRUE DAMAGE TO THE ENEMY</center>`
+					)
+
+					renderInfo('skill_info_1',passiveBuider.join(""))
+
+				break;
+
+				case "49": //PHARSA
+
+					var dmg = f(f(300) + f(f(this.getTotal_magic_power()) * f(0.8)))
+					
+					passiveBuider.push(
+						`<center>DEAL EXTRA <span class="dmg_info">${dmg}</span> MAGIC DAMAGE</center>`
+					)
+
+					renderInfo('skill_info_1',passiveBuider.join(""))
+
+				break;
+
+				case "47": //NATALIA
+
+					//NEED TO CALCULATE ARMOR
+
+					passiveBuider.push()
+
+					renderInfo('skill_info_1',passiveBuider.join(""))
+
+				break;
+
+				
+				case "46": //NANA
+
+					var recover = f(f(this.getTotal_hp()) * f(0.10)).toFixed(2)
+					var move_speed = f(f(this.getTotal_move_speed()) * f(0.7))
+					var extra_move = f(f(this.getTotal_move_speed()) + f(move_speed)).toFixed(2)
+
+					passiveBuider.push(
+						`<center>INCREASE MOVESPEED TO <span class="dmg_info">${extra_move}</span></center>`,
+						`<br>`,
+						`<center>NANA RECOVER <span class="dmg_info">${recover}</span> POINTS OF HP</center>`
+					)
+
+					renderInfo('skill_info_1',passiveBuider.join(""))
+
+				break;
+
+				case "45": //MOSKOV
+
+					var base = f(f(this.getTotal_physical_attack()) * f(0.80)).toFixed(2)
+
+					passiveBuider.push(
+						`<center>PENETRATE TARGET DEAL <span class="dmg_info">${base}</span> PHYSICAL DAMAGE</center>`
+					)
+
+					renderInfo('skill_info_1',passiveBuider.join(""))
+
+				break;
+
+				
+				case "44": //MIYA
+					
+					var base = f(f(this.getTotal_attack_speed()) + f(f(40)/100)).toFixed(2)
+
+					passiveBuider.push(
+						`<center>INCREASE ATTACK SPEED TO <span class="dmg_info">${base}</span> AT MAX STACK</center>`
+					)
+
+					renderInfo('skill_info_1',passiveBuider.join(""))
+
+				break;
+
+				case "42": //MARTIS
+					
+				var base = f(f(this.getTotal_attack_speed()) + f(f(60)/100)).toFixed(2)
+
+				passiveBuider.push(
+					`<center>INCREASE ATTACK SPEED TO <span class="dmg_info">${base}</span> AT MAX STACK</center>`
+				)
+
+				renderInfo('skill_info_1',passiveBuider.join(""))
+
+				break;
+				
+				
+				case "41": //LOLITA
+
+					var level = 0
+		
+					if(this.level ==  null) {
+						level = 1
+					} else {
+
+						level = f(this.level)
+					}
+
+					var shield = f(f(40) * f(level))
+					var new_shield = f(f(300) + f(shield)).toFixed(2)
+
+					passiveBuider.push(
+						`<center>PROVIDE SHIELD THAT TAKE <span class="dmg_info">${new_shield}</span> DAMAGE</center>`
+					)
+
+					renderInfo('skill_info_1',passiveBuider.join(""))
+
+				break;
+				
+				case "38": //LAPU-LAPU
+
+					var extra_attack = f(f(this.getTotal_physical_attack()) * f(2.5)).toFixed(2)
+					var level = 0
+		
+					if(this.level ==  null) {
+						level = 1
+					} else {
+
+						level = f(this.level)
+					}
+
+					var shield = f(f(50) * f(level))
+					var final_shield = f(f(500) + f(shield)).toFixed(2)
+
+					passiveBuider.push(
+						`<center>DEAL EXTRA <span class="dmg_info">${extra_attack}</span> DAMAGE (NOT CRITICAL)</center>`,
+						`<br>`,
+						`<center>GAIN SHIELD THAT ABSORBS <span class="dmg_info">${final_shield}</span> DAMAGE</center>`
+					)
+
+					renderInfo('skill_info_1',passiveBuider.join(""))
+
+				break;
+
+			    case "36": //KARRIE
+					
+					var dmg_1 = f(f(global_enemy_hp) * f(0.07)).toFixed(2)
+					var dmg_2 = f(f(global_enemy_hp) * f(0.13)).toFixed(2)
+
+					passiveBuider.push(
+						`<center>DEALS <span class="dmg_info">${dmg_1}</span> ~ <span class="dmg_info">${dmg_2}</span> TRUE DAMAGE</center>`
+					)
+
+					renderInfo('skill_info_1',passiveBuider.join(""))
+
+				break;
+
+				case "34": //KAGURA
+
+					var shield = f(f(280) + f(f(this.getTotal_magic_power()) * f(0.50))).toFixed(2)
+
+					passiveBuider.push(
+						`<center>GAIN A SHIELD THAT ABSORBS <span class="dmg_info">${shield}</span> DAMAGE</center>`
+					)
+
+					renderInfo('skill_info_1',passiveBuider.join(""))
+
+				break;
+
+				case "33": //JOHNSON
+
+					var shield = f(f(this.getTotal_armor()) * f(7))
+					var new_shield = f(f(300) + f(shield))
+
+					passiveBuider.push(
+						`<center>GENERERATE SHIELD THAT ABSORBS <span class="dmg_info">${new_shield}</span> DAMAGE</center>`
+					)
+
+					renderInfo('skill_info_1',passiveBuider.join(""))
+
+				break;
+
+				case "31": //JAWHEAD
+					
+					var base_atk = f(f(this.getTotal_physical_attack()) * f(8)).toFixed(2)
+
+					passiveBuider.push(
+						`<center>BASIC ATTACK DEALS <span class="dmg_info">${base_atk}</span> AT FULL STACKS</center>`
+					)
+
+					renderInfo('skill_info_1',passiveBuider.join(""))
+
+				break;
+
+				case "30": //IRITHEL
+
+					var arrow = f(f(this.getTotal_physical_attack()) * f(0.42)).toFixed(2)
+
+					passiveBuider.push(
+						`<center>EACH ARROW DEALS <span class="dmg_info">${arrow}</span> PHYSICAL DAMAGE</center>`
+					)
+
+					renderInfo('skill_info_1',passiveBuider.join(""))
+
+				break;
+
+				case "29": //HYLOS
+
+					var hp_mana = f(this.getTotal_hp()).toFixed(2)
+
+					passiveBuider.push(
+						`<center>INCREASE HP TO  <span class="dmg_info">${hp_mana}</span> FROM MANA</center>`
+					)
+
+					renderInfo('skill_info_1',passiveBuider.join(""))
+
+				break;
+
+				
+				case "28": //HILDA
+
+					var shield = f(f(this.getTotal_hp()) * f(0.10)).toFixed(2)
+					var extra_regen = f(f(this.getTotal_hp()) * f(0.015)).toFixed(2)
+					var ehance_regen = f(f(this.getTotal_hp()) * f(0.30)).toFixed(2)
+					var regen = f(f(this.getTotal_hp_regen()) + f(extra_regen)).toFixed(2)
+
+					passiveBuider.push(
+						`<center>INCREASE HP REGEN TO <span class="dmg_info">${regen}</span> </center>`,
+						`<br>`,
+						`<center>GAIN A SHIELD THAT ABSORBS <span class="dmg_info">${shield}</span> DAMAGE</center>`,
+						`<br>`,
+						`<center>ENHANCED REGEN EFFECT RECOVER <span class="dmg_info">${ehance_regen}</span> HP</center>`
+					)
+
+					renderInfo('skill_info_1',passiveBuider.join(""))
+
+				break;
+
+
+				case "25": //HARLEY
+
+					var phy = f(f(this.getTotal_physical_attack()) * f(0.5)).toFixed(2)
+					var mag = f(f(this.getTotal_magic_power()) * f(0.6)).toFixed(2)
+					var final_dmg = f(f(60) + f(f(phy) + f(mag))).toFixed(2)
+
+					passiveBuider.push(
+						`<center>BASIC ATTACK DEAL EXTRA <span class="dmg_info">${final_dmg} </span> MAGIC DAMAGE</center>`
+					)
+
+					renderInfo('skill_info_1',passiveBuider.join(""))
+
+				break;
+
+				case "24": //HANABI
+
+					var shield = f(f(this.getTotal_hp()) * f(0.20)).toFixed(2)
+					var move   = f(f(this.getTotal_move_speed()) + f(30)).toFixed(2)
+
+					passiveBuider.push(
+						`<center>GAIN A SHIELD UP TO <span class="dmg_info">${shield}</span></center>`,
+						`<br>`,
+						`<center>INCREASE MOVESPEED TO <span class="dmg_info">${move}</span></center>`
+					)
+
+					renderInfo('skill_info_1',passiveBuider.join(""))
+
+				break;
+				
+				
+				case "22": //GROCK
+
+					var level = 0
+			
+					if(this.level ==  null) {
+						level = 1
+					} else {
+
+						level = f(this.level)
+					}
+
+					var move = f(f(this.getTotal_move_speed()) * f(0.10)).toFixed(2)
+					var new_move = f(f(this.getTotal_move_speed()) + f(move)).toFixed(2)
+					var phy_def = f(f(this.getTotal_armor()) + f(15)).toFixed(2)
+					var mgc_def = f(f(this.getTotal_magic_armor()) + f(15)).toFixed(2)
+					var hp_reg = f(f(this.getTotal_hp_regen()) + f(15)).toFixed(2)
+					var extra_def = f(f(8) * f(level)).toFixed(2)
+					var phy = f(f(phy_def) + f(extra_def)).toFixed(2)
+					var mgc = f(f(mgc_def) + f(extra_def)).toFixed(2)
+					var regen = f(f(hp_reg) + f(extra_def)).toFixed(2)
+
+					passiveBuider.push(
+						`<center>INCREASE MOVESPEED TO <span class="dmg_info">${new_move}</span></center>`,
+						`<br>`,
+						`<center>INCREASE PHYSICAL DEFENSE TO <span class="dmg_info">${phy}</span></center>`,
+						`<br>`,
+						`<center>INCREASE MAGIC DEFENSE TO <span class="dmg_info">${mgc}</span></center>`,
+						`<br>`,
+						`<center>INCREASE HP REGEN TO <span class="dmg_info">${regen}</span></center>`
+					)
+
+					renderInfo('skill_info_1',passiveBuider.join(""))
+
+				break;
+
 				// case "": //
 
 				// 	passiveBuider.push()
@@ -1420,6 +1833,20 @@ function champion(data) {
 				
 			}
 
+			if(this.id == '66') { //BELERICK
+
+				var extra_hp = f(f(this.item_hp) * f(0.15)).toFixed(2)
+				this.setTotal_hp(f(this.getTotal_hp()) + f(extra_hp))
+
+			}
+
+			if(this.id == '29') { //HYLOS
+
+				var extra_hp = f(f(this.getTotal_extra_mana()) * f(1.5)).toFixed(2)
+				this.setTotal_hp(f(this.getTotal_hp()) + f(extra_hp))
+
+			}
+
 
 			if(this.item_hp > 0 ) {
 
@@ -1568,6 +1995,14 @@ function champion(data) {
 			this.setTotal_lifesteal(f(f(this.base_lifesteal) + f(this.item_lifesteal) + f(this.potion_lifesteal) + f(this.emblem_lifesteal) + f(this.talent_t1_lifesteal)).toFixed(2))
 			this.setTotal_extra_lifesteal(f(f(this.item_lifesteal) + f(this.potion_lifesteal) + f(this.emblem_lifesteal) + f(this.talent_t1_lifesteal)).toFixed(2))
 			this.setTotal_level_lifesteal(f(f(this.base_lifesteal)).toFixed(2))
+
+			if(this.id == "52") {
+				
+				var item_lifesteal = this.item_lifesteal
+				var extra_lifesteal = (f(f(item_lifesteal) * f(0.25)))
+				this.setTotal_lifesteal((f(this.getTotal_lifesteal()) + f(5)))
+				this.setTotal_lifesteal((f(this.getTotal_lifesteal()) + f(extra_lifesteal)))
+			}
 
 			if(this.item_lifesteal > 0 ) {
 

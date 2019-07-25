@@ -14,7 +14,7 @@
 | path to your installation.
 |
 */
-$config['base_url']	= 'http://localhost:8080/older_builder/';
+$config['base_url']	= 'http://localhost:8080/build.mlbb/';
 $config['cdr_limit'] = 40;
 $config['atk_spd_limit'] = 250;
 
